@@ -31,3 +31,15 @@ simulate_data <- function(
   outcome <- expected_mean + noise
   return(list(design = design, outcome = outcome, coef_true = coef_true))
 }
+
+approx_grad <- function(func, x, dx = 1e-6) {
+  numerical_grad <- rep(0, length(x))
+  for (i in 1:length(x)) {
+    x_plus <- x
+    x_plus[i] <- x[i] + dx
+    x_minus <- x
+    x_minus[i] <- x[i] - dx
+    numerical_grad[i] <- (func(x_plus) - func(x_minus)) / (2 * dx)
+  }
+  return(numerical_grad)
+}
