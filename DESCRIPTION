@@ -2,7 +2,10 @@ Package: hiperglm
 Title: High-performance linear regression for large data sets
 Version: 0.0.0.9000
 Authors@R: 
-    person("Jianing", "Yao" , "jyao37@jhmi.edu", role = c("aut", "cre"))
+    person("Jianing", "Yao", , "jyao37@jhmi.edu", role = c("aut", "cre"),
+    comment = c(ORCID = "YOUR-ORCID-ID"))
+Author: Jianing Yao
+Maintainer: Jianing Yao <jyao37@jhmi.edu>
 Description: TBA.
 License: MIT + file LICENSE
 Encoding: UTF-8
