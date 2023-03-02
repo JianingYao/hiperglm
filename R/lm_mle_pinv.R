@@ -1,5 +1,5 @@
+#' use Cholesky decomposition to perform pseudo-inverse
 lm_mle_pinv <- function(design, outcome){
-  # use Cholesky decomposition to perform pseudo-inverse
   a <- crossprod(design)
   b <- crossprod(design, outcome)
   upper <- chol(a)
