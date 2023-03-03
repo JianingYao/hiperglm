@@ -14,7 +14,8 @@ test_that("return TRUE if MLE via BFSG is close to truth", {
   truth <- as.matrix(c(5, -4, 2.5))
   outcome <- as.matrix(design %*% truth)
   expect_true(are_all_close(lm_mle_BFGS(design, outcome, noise_var = 0.1),
-    truth, abs_tol = 1e-6, rel_tol = 1e-6
+    truth,
+    abs_tol = 1e-6, rel_tol = 1e-6
   ))
 })
 
