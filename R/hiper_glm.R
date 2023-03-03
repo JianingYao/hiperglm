@@ -1,6 +1,6 @@
 #' @export
 hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
-  supported_model <- c("linear")
+  supported_model <- c("linear", "logit")
   if (!(model %in% supported_model)) {
     stop(sprintf("The model %s is not supported.", model))
   }
