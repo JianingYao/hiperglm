@@ -9,8 +9,7 @@ hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
     class(hglm_out) <- "hglm"
     if (method == "pinv") {
       hglm_out$coef <- lm_mle_pinv(design, outcome)
-    }
-    if (method == "BFGS") {
+    } else if (method == "BFGS") {
       hglm_out$coef <- lm_mle_BFGS(design, outcome)
     } else {
       stop("The function is yet to be implemented for other methods other than pseudo-inverse or BFGS.")
