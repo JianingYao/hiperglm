@@ -12,9 +12,9 @@ hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
     }
     if (method == "BFGS") {
       hglm_out$coef <- lm_mle_BFGS(design, outcome)
+    } else {
+      stop("The function is yet to be implemented for other methods other than pseudo-inverse or BFGS.")
     }
-  } else {
-    warning("The function is yet to be implemented.")
   }
   return(hglm_out)
 }
