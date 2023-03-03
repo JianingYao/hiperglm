@@ -15,9 +15,11 @@ loglik_gradient <- function(design, outcome, beta, noise_var = 1) {
 #' implement BFGS to fund MLE
 lm_mle_BFGS <- function(design, outcome, noise_var = 1) {
   np <- ncol(design)
-  result <- stats::optim(par = rep(0, np), fn = log_likelihood, gr = loglik_gradient,
-                  design = design, outcome = outcome, noise_var = noise_var,
-                  method = "BFGS", control = list(fnscale = -1))
+  result <- stats::optim(
+    par = rep(0, np), fn = log_likelihood, gr = loglik_gradient,
+    design = design, outcome = outcome, noise_var = noise_var,
+    method = "BFGS", control = list(fnscale = -1)
+  )
   beta_est <- result$par
   return(beta_est)
 }

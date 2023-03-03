@@ -7,8 +7,7 @@ are_all_close <- function(v, w, abs_tol = 1e-6, rel_tol = 1e-6) {
 
 simulate_data <- function(
     n_obs, n_pred, model = "linear", intercept = NULL,
-    coef_true = NULL, design = NULL, seed = NULL, signal_to_noise = 0.1
-) {
+    coef_true = NULL, design = NULL, seed = NULL, signal_to_noise = 0.1) {
   if (!is.null(seed)) {
     set.seed(seed)
   }
