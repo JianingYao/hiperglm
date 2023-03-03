@@ -12,7 +12,7 @@ loglik_gradient <- function(design, outcome, beta, noise_var = 1) {
   return(grad)
 }
 
-#' implement BFGS to fund MLE
+#' implement BFGS to find MLE
 lm_mle_BFGS <- function(design, outcome, noise_var = 1) {
   np <- ncol(design)
   result <- stats::optim(
