@@ -20,6 +20,10 @@ lm_mle_BFGS <- function(design, outcome, noise_var = 1) {
     design = design, outcome = outcome, noise_var = noise_var,
     method = "BFGS", control = list(fnscale = -1)
   )
+  optim_converged <- (result$convergence == 0L)
+  if (!optim_converged) {
+    warning("Optimization did not converge. The estimates may be meaningless.")
+  }
   beta_est <- result$par
   return(beta_est)
 }
