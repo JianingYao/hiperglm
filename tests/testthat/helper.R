@@ -7,12 +7,11 @@ are_all_close <- function(v, w, abs_tol = 1e-6, rel_tol = 1e-6) {
 
 simulate_data <- function(
     n_obs, n_pred, model = "linear", intercept = NULL,
-    coef_true = NULL, design = NULL, seed = NULL, option = list()
-) {
+    coef_true = NULL, design = NULL, seed = NULL, option = list()) {
   if (!is.null(seed)) {
     set.seed(seed)
   }
-  if ((model != "linear")  && !is.null(option$signal_to_noise)) {
+  if ((model != "linear") && !is.null(option$signal_to_noise)) {
     warning(paste(
       "The `signal_to_noise` option is currently unsupported for",
       "non-linear models and will be ignored."
@@ -32,7 +31,7 @@ simulate_data <- function(
     design <- cbind(rep(1, n_obs), design)
   }
   expected_mean <- as.vector(design %*% coef_true)
-  if (model == 'linear') {
+  if (model == "linear") {
     signal_to_noise <- option$signal_to_noise
     if (is.null(signal_to_noise)) {
       signal_to_noise <- 0.1
