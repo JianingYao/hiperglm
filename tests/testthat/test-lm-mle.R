@@ -29,8 +29,8 @@ test_that("return TRUE if analytical and numerical gradient match", {
   for (i in 1:n_test) {
     if (!grads_are_close) break
     beta <- rnorm(3)
-    analytical_grad <- loglik_gradient(design, outcome, beta)
-    numerical_grad <- approx_grad(function(beta) log_likelihood(design, outcome, beta), beta)
+    analytical_grad <- lm_loglik_gradient(design, outcome, beta)
+    numerical_grad <- approx_grad(function(beta) lm_log_likelihood(design, outcome, beta), beta)
     grads_are_close <- are_all_close(analytical_grad, numerical_grad,
       abs_tol = 1e-3, rel_tol = 1e-3
     )
@@ -49,3 +49,16 @@ test_that("return TRUE if MLE via pseudo-inverse and BFGS match", {
     abs_tol = 1e-3, rel_tol = 1e-3
   ))
 })
+
+# test_that("newton and bfgs outputs coincide on logit model", {
+#   n_obs <- 32; n_pred <- 4
+#   data <- simulate_data(n_obs, n_pred, model = 'logit', seed = 1918)
+#   design <- data$design; outcome <- data$outcome
+#   via_newton_out <- hiper_glm(design, outcome, model = 'logit')
+#   via_bfgs_out <- hiper_glm(
+#     design, outcome, model = 'logit', option = list(mle_solver = 'BFGS')
+#   )
+#   expect_true(are_all_close(
+#     coef(via_newton_out), coef(via_bfgs_out), abs_tol = 1e-2, rel_tol = 1e-2
+#   ))
+# })
