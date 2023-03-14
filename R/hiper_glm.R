@@ -5,28 +5,29 @@ hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
     stop(sprintf("The model %s is not supported.", model))
   }
   if (model == "linear") {
-    if (method == "pinv") {
-      MLE <- lm_mle_pinv(design, outcome)
-    } else if (method == "BFGS") {
-      MLE <- lm_mle_BFGS(design, outcome)
+    if (method == "BFGS") {
+      hglm_out <- mle_bfgs(design, outcome, model)
+    } else if (method == "pinv") {
+      hglm_out <- mle_pinv(design, outcome)
     } else {
-      stop("The function is yet to be implemented for other methods other than
-           pseudo-inverse or BFGS for linear regression.")
+      stop(sprintf(
+        "The method %s is not supported,
+        please use \"BFGS\" or \"pinv\" for linear regression.", method
+      ))
     }
   }
   if (model == "logit") {
-    hglm_out <- list()
-    class(hglm_out) <- "hglm"
     if (method == "BFGS") {
-      MLE <- logit_mle_BFGS(design, outcome)
+      hglm_out <- mle_bfgs(design, outcome, model)
     } else if (method == "newton") {
-      MLE <- logit_mle_newton(design, outcome, tol = 1e-8)
+      hglm_out <- mle_newton(design, outcome, tol = 1e-8)
     } else {
-      stop("The function is yet to be implemented for other methods other than
-           Newton's method or BFGS for logistic regression.")
+      stop(sprintf(
+        "The method %s is not supported,
+        please use \"BFGS\" or \"newton\" for logistic regression.", method
+      ))
     }
   }
-  hglm_out <- list(coef = MLE)
   class(hglm_out) <- "hglm"
   return(hglm_out)
 }

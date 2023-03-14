@@ -1,10 +1,3 @@
-are_all_close <- function(v, w, abs_tol = 1e-6, rel_tol = 1e-6) {
-  abs_diff <- abs(v - w)
-  are_all_within_atol <- all(abs_diff < abs_tol)
-  are_all_within_rtol <- all(abs_diff < rel_tol * pmax(abs(v), abs(w)))
-  return(are_all_within_atol && are_all_within_rtol)
-}
-
 simulate_data <- function(
     n_obs, n_pred, model = "linear", intercept = NULL,
     coef_true = NULL, design = NULL, seed = NULL, option = list()) {
@@ -54,7 +47,7 @@ simulate_data <- function(
 
 approx_grad <- function(func, x, dx = 1e-6) {
   numerical_grad <- rep(0, length(x))
-  for (i in 1:length(x)) {
+  for (i in seq_along(x)) {
     x_plus <- x
     x_plus[i] <- x[i] + dx
     x_minus <- x
