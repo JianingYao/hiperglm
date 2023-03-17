@@ -7,12 +7,12 @@ hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
   if (model == "linear") {
     if (method == "BFGS") {
       hglm_out <- mle_bfgs(design, outcome, model)
-    } else if (method == "pinv") {
-      hglm_out <- mle_pinv(design, outcome)
+    } else if (method == "qr") {
+      hglm_out <- mle_qr(design, outcome)
     } else {
       stop(sprintf(
         "The method %s is not supported,
-        please use \"BFGS\" or \"pinv\" for linear regression.", method
+        please use \"BFGS\" or \"qr\" for linear regression.", method
       ))
     }
   }

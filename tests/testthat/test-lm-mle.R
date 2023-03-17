@@ -3,8 +3,8 @@ test_that("return TRUE if MLE via pseudo-inverse is close to truth in linear reg
   design <- as.matrix(cbind(rep(1, 5), rnorm(5, 0, 1), rnorm(5, 10, 2)))
   truth <- as.matrix(c(5, -4, 2.5))
   outcome <- as.matrix(design %*% truth)
-  pinv_out <- hiper_glm(design, outcome, model = "linear", method = "pinv")
-  expect_true(are_all_close(coef(pinv_out), truth,
+  qr_out <- hiper_glm(design, outcome, model = "linear", method = "qr")
+  expect_true(are_all_close(coef(qr_out), truth,
     abs_tol = 1e-6, rel_tol = 1e-6
   ))
 })
@@ -44,9 +44,9 @@ test_that("return TRUE if MLE via pseudo-inverse and BFGS match in linear regres
   design <- as.matrix(cbind(rep(1, 5), rnorm(5, 0, 1), rnorm(5, 10, 2)))
   truth <- as.matrix(c(5, -4, 2.5))
   outcome <- as.matrix(design %*% truth)
-  pinv_result <- hiper_glm(design, outcome, model = "linear", method = "pinv")
+  qr_result <- hiper_glm(design, outcome, model = "linear", method = "qr")
   bfgs_result <- hiper_glm(design, outcome, model = "linear", method = "BFGS")
-  expect_true(are_all_close(coef(pinv_result), coef(bfgs_result),
+  expect_true(are_all_close(coef(qr_result), coef(bfgs_result),
     abs_tol = 1e-3, rel_tol = 1e-3
   ))
 })

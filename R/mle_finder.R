@@ -1,10 +1,6 @@
-#' use Cholesky decomposition to perform pseudo-inverse for a linear model
-mle_pinv <- function(design, outcome) {
-  a <- crossprod(design)
-  b <- crossprod(design, outcome)
-  upper <- chol(a)
-  z <- backsolve(upper, b, transpose = TRUE)
-  beta <- as.vector(backsolve(upper, z))
+#' use QR decomposition to solve a linear model
+mle_qr <- function(design, outcome) {
+  beta <- qr.solve(design, outcome)
   return(list(coef = beta))
 }
 
