@@ -12,7 +12,7 @@ take_one_newton_step <- function(design, outcome, beta, qr_solver = TRUE) {
     weight <- logit_weights(design, beta)
     x_tilde <- diag(sqrt(weight)) %*% design
     y_tilde <- sqrt(weight) * est + 1 / sqrt(weight) * (outcome - mu)
-    beta <- qr.solve(x_tilde, y_tilde)
+    beta <- qr_solve_rcpp(x_tilde, y_tilde)
   } else {
     grad <- logit_loglik_gradient(design, outcome, beta)
     hess <- logit_hessian(design, beta)
