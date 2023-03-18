@@ -40,11 +40,17 @@ logit_loglik_gradient <- function(design, outcome, beta) {
   return(grad)
 }
 
-#' calculate Hessian of the log-likelihood under a logistic regression model
-logit_hessian <- function(design, beta) {
+#' calculate weights based on design matrix and outcome
+logit_weights <- function(design, beta) {
   est <- design %*% beta
   mu <- as.vector(sigmoid(est))
-  weight <- diag(mu * (1 - mu))
+  weight <- mu * (1 - mu)
+  return(weight)
+}
+
+#' calculate Hessian of the log-likelihood under a logistic regression model
+logit_hessian <- function(design, beta) {
+  weight <- diag(logit_weights(design, beta))
   hess <- -t(design) %*% weight %*% design
   return(hess)
 }
