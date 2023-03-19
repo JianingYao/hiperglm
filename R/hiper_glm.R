@@ -1,5 +1,5 @@
 #' @export
-hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
+hiper_glm <- function(design, outcome, model = "linear", method = "BFGS", newton_qr = TRUE) {
   supported_model <- c("linear", "logit")
   if (!(model %in% supported_model)) {
     stop(sprintf("The model %s is not supported.", model))
@@ -7,12 +7,12 @@ hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
   if (model == "linear") {
     if (method == "BFGS") {
       hglm_out <- mle_bfgs(design, outcome, model)
-    } else if (method == "pinv") {
-      hglm_out <- mle_pinv(design, outcome)
+    } else if (method == "qr") {
+      hglm_out <- mle_qr(design, outcome)
     } else {
       stop(sprintf(
         "The method %s is not supported,
-        please use \"BFGS\" or \"pinv\" for linear regression.", method
+        please use \"BFGS\" or \"qr\" for linear regression.", method
       ))
     }
   }
@@ -20,7 +20,7 @@ hiper_glm <- function(design, outcome, model = "linear", method = "BFGS") {
     if (method == "BFGS") {
       hglm_out <- mle_bfgs(design, outcome, model)
     } else if (method == "newton") {
-      hglm_out <- mle_newton(design, outcome, tol = 1e-8)
+      hglm_out <- mle_newton(design, outcome, tol = 1e-8, qr_solver = newton_qr)
     } else {
       stop(sprintf(
         "The method %s is not supported,

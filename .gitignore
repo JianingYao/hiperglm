@@ -6,3 +6,4 @@
 .lintr
 ..Rcheck/*
 .github/*
+/man

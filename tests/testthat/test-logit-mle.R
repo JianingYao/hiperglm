@@ -59,19 +59,26 @@ test_that("return TRUE if newton coincides with bfgs and glm outputs on logit mo
   data <- simulate_data(n_obs, n_pred, model = "logit", seed = 100)
   design <- data$design
   outcome <- data$outcome
-  via_newton_out <- hiper_glm(design, outcome,
-    model = "logit", method = "newton"
+  via_newton_lu_out <- hiper_glm(design, outcome,
+    model = "logit", method = "newton", newton_qr = FALSE
   )
   via_bfgs_out <- hiper_glm(design, outcome,
     model = "logit", method = "BFGS"
   )
+  via_newton_qr_out <- hiper_glm(design, outcome,
+    model = "logit", method = "newton", newton_qr = TRUE
+  )
   glm_out <- stats::glm(data$outcome ~ data$design + 0, family = binomial())
   expect_true(are_all_close(
-    coef(via_newton_out), coef(via_bfgs_out),
+    coef(via_newton_lu_out), coef(via_bfgs_out),
     abs_tol = 1e-3, rel_tol = 1e-3
   ))
   expect_true(are_all_close(
-    coef(glm_out), coef(via_bfgs_out),
+    coef(glm_out), coef(via_newton_lu_out),
+    abs_tol = 1e-3, rel_tol = 1e-3
+  ))
+  expect_true(are_all_close(
+    coef(via_newton_qr_out), coef(via_newton_lu_out),
     abs_tol = 1e-3, rel_tol = 1e-3
   ))
 })
